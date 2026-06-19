@@ -134,15 +134,11 @@
 
 						const csvText = await response.text();
 
-						// Clean up lines and split them by row
+
 						const lines = csvText.split('\n').map(line => line.trim()).filter(line => line);
 
-						// Loop through each row (skip header row 0)
 						for (let i = 1; i < lines.length; i++) {
-							// Smart Split: splits by comma but ignores commas inside quotation marks (like net worth)
 							const currentLine = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-
-							// Clean up string symbols and quotes
 							const name = currentLine[0].replace(/['"]+/g, '').trim();
 							const photo = currentLine[1].replace(/['"]+/g, '').trim();
 							const age = currentLine[2].replace(/['"]+/g, '').trim();
@@ -150,20 +146,18 @@
 							const interests = currentLine[4].replace(/['"]+/g, '').trim();
 							const network = currentLine[5].replace(/['"]+/g, '').trim();
 
-							// 3. PUSH raw properties into your flat array (6 items per person)
+							
 							table.push(
-								name,       // table[i]     -> used for name text
-								photo,      // table[i + 1] -> used for image src url
-								age,        // table[i + 2] -> used for age text display
-								country,    // table[i + 3] -> used for country code text
-								interests,  // table[i + 4] -> used for interest text lines
-								network     // table[i + 5] -> used for color parsing logic
+								name,       
+								photo,      
+								age,       
+								country,    
+								interests, 
+								network     
 							);
 						}
 
-						console.log("Table successfully populated! Total item count:", table.length); // Should print 1200
-
-						// 4. NOW that the array is full, start the 3D initialization functions!
+						
 					} catch (error) {
 						console.error('Error loading Google Sheet into table array:', error);
 					}
